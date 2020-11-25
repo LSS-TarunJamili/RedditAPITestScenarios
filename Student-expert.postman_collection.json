@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "4f0afce8-e9db-48f0-9879-f299e9ce0d36",
+		"_postman_id": "dd4649a3-dc55-41f9-ae32-b161709da772",
 		"name": "Student expert",
 		"description": "Learn the skills to become a certified Postman Student Expert.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -11,30 +11,6 @@
 			"item": [
 				{
 					"name": "0. Start training",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "d3877b78-4a54-4e16-8214-f6615583cd39",
-								"exec": [
-									"//Verify the Status code is 200 \r",
-									"pm.test(\"Verifying Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"\r",
-									"let response = pm.response.json();\r",
-									"    stepcourse = response.tutorial.steps[0];\r",
-									"\r",
-									"//Comparing the Data course and step course are same\r",
-									"\r",
-									"pm.test(\"Verifying the values of Data Course and Step Course are same\", function () {\r",
-									"    pm.expect(response.data.course).to.eql(stepcourse.raw_data.course);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -52,26 +28,11 @@
 				},
 				{
 					"name": "1. Get matches",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "3d9fae11-e6a3-4b18-9c7c-c8715111e9e3",
-								"exec": [
-									"var jsonData = pm.response.json();\r",
-									" var matchID = jsonData.data.matches[2].id;\r",
-									"\r",
-									"pm.globals.set(\"MatchID\", matchID);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{training_api}}/matches?status=pending&team=United",
+							"raw": "{{training_api}}/matches?status=played",
 							"host": [
 								"{{training_api}}"
 							],
@@ -81,18 +42,7 @@
 							"query": [
 								{
 									"key": "status",
-									"value": "pending",
-									"description": "this will show the pending matches"
-								},
-								{
-									"key": "status",
-									"value": "played",
-									"description": "this will show the palyed matches",
-									"disabled": true
-								},
-								{
-									"key": "team",
-									"value": "United"
+									"value": "played"
 								}
 							]
 						}
@@ -106,7 +56,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{    \r\n    \"match\": \"Cup Final\",\r\n    \"when\": \"{{$randomDateFuture}}\",\r\n    \"against\": \"Academical\"\r\n   \r\n}",
+							"raw": "{\r\n    \"against\": \"Academical\",\r\n    \"match\": \"Cup Final\",\r\n    \"when\": \"{{$randomDateFuture}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -126,7 +76,7 @@
 					"response": []
 				},
 				{
-					"name": "3. Update Score",
+					"name": "3. Update score",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -140,7 +90,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{training_api}}/match?match_id={{MatchID}}",
+							"raw": "{{training_api}}/match?match_id=8bKcYmFVy",
 							"host": [
 								"{{training_api}}"
 							],
@@ -150,7 +100,7 @@
 							"query": [
 								{
 									"key": "match_id",
-									"value": "{{MatchID}}"
+									"value": "8bKcYmFVy"
 								}
 							]
 						}
@@ -158,7 +108,7 @@
 					"response": []
 				},
 				{
-					"name": "4. Remove Match",
+					"name": "4. Remove match",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -174,50 +124,12 @@
 							"variable": [
 								{
 									"key": "match_id",
-									"value": "{{MatchID}}",
-									"type": "string"
+									"value": "8bKcYmFVy"
 								}
 							]
 						}
 					},
 					"response": []
-				}
-			],
-			"auth": {
-				"type": "apikey",
-				"apikey": [
-					{
-						"key": "value",
-						"value": "{{email_key}}",
-						"type": "string"
-					},
-					{
-						"key": "key",
-						"value": "match_key",
-						"type": "string"
-					}
-				]
-			},
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "1a90c765-e8e2-4ba0-ab24-83cfcf024604",
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"id": "7f53b451-f4ca-47c7-b330-81dbc4f7d211",
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -231,15 +143,17 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "76ad8e13-6f83-4879-935e-ce85441a628b",
+								"id": "133c95be-3f02-4e77-b3d6-67c5f549eea2",
 								"exec": [
-									"//Verify the JSON respose is returning the Status code 200\r",
-									"pm.test(\"Status code is 200\", function () {\r",
+									"//Two tests to check the behaviour of PASS and FAIL scenario's\r",
+									"pm.test('Status code is 400', function () {\r",
 									"    pm.response.to.have.status(400);\r",
 									"});\r",
-									"\r",
-									"var player_list=pm.response.json().data.players;\r",
-									"\r",
+									"pm.test('Status code is 200', function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"///\r",
+									"var player_list = pm.response.json().data.players;\r",
 									"pm.environment.set('player_id', player_list[Math.floor(Math.random() * player_list.length)].id);"
 								],
 								"type": "text/javascript"
@@ -248,7 +162,7 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "3a550525-4440-4df0-8a9f-20d877843ecd",
+								"id": "20c96293-02cb-423e-8cdd-03c4877a1980",
 								"exec": [
 									""
 								],
@@ -277,14 +191,14 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e7956af6-b889-49b5-91d9-bff48bbd5895",
+								"id": "ff0dfc76-006b-4dee-bd7e-fc67a8c4c608",
 								"exec": [
-									"//Verify the JSON respose is returning the Status code 200\r",
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
-									"\r",
-									"if(pm.response.json().data.played<750) postman.setNextRequest('Get all players');"
+									"if(pm.response.json().data.played<750){\r",
+									"    postman.setNextRequest('Get all players');\r",
+									"}"
 								],
 								"type": "text/javascript"
 							}
@@ -292,11 +206,10 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "a6b5287f-92ca-432f-a38e-9d0fdf26b41d",
+								"id": "e10fb74d-70cb-4bc3-99b2-e647d8ed6f70",
 								"exec": [
-									"// This line will execute when there are not environment is selected and set the default value of the player_id is -1\r",
-									"if(!pm.variables.get('player_id')) \r",
-									"    pm.variables.set('player_id', -1);"
+									"if (!pm.variables.get('player_id'))\r",
+									"pm.variables.set('player_id',-1);"
 								],
 								"type": "text/javascript"
 							}
@@ -320,7 +233,7 @@
 								}
 							]
 						},
-						"description": "Get a specific player by passing the player Id as a query parameter\r\n\r\n* Use the parameter name 'id'"
+						"description": "Get a specific player bt passing the player ID as a query parameter.\r\n\r\n* use the parameter name 'id'"
 					},
 					"response": []
 				},
@@ -330,17 +243,15 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fcc78151-a395-4aa0-8da2-d4276809226c",
+								"id": "d62270b6-9592-40d9-b339-a7be83d00302",
 								"exec": [
-									"//Verify the JSON respose is returning the Status code 200\r",
 									"pm.test(\"Status code is 200\", function () {\r",
 									"    pm.response.to.have.status(200);\r",
 									"});\r",
-									"\r",
-									"//Verify the keys (won, lost, drew) are all present in the response\r",
-									"pm.test('stats include all fields', function(){\r",
+									"///\r",
+									"pm.test('Stats include all fields', function(){\r",
 									"    var jsonData = pm.response.json().data;\r",
-									"    pm.expect(jsonData).to.have.all.keys('won', 'lost', 'drew');\r",
+									"    pm.expect(jsonData).to.have.all.keys('won','lost','drew');\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -369,97 +280,12 @@
 			"name": "3. Check Progress",
 			"item": [
 				{
-					"name": "Skill check",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "23c9873a-47cd-4caf-8dce-152004012386",
-								"exec": [
-									"pm.test(\"Status code is 200\", function () {\r",
-									"    pm.response.to.have.status(200);\r",
-									"});\r",
-									"\r",
-									"pm.globals.set(\"myCourse\", \"Student expert\");\r",
-									"\r",
-									"var jsonData=pm.response.json();\r",
-									"var randValue = jsonData.rand;\r",
-									"\r",
-									"pm.environment.set('responseData', randValue);"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "user-id",
-								"value": "{{userId}}",
-								"type": "text",
-								"description": "plz don't edit or remove this header"
-							},
-							{
-								"key": "course",
-								"value": "{{myCourse}}",
-								"type": "text",
-								"description": "plz don't edit or remove this header"
-							},
-							{
-								"key": "response-value",
-								"value": "{{responseData}}",
-								"type": "text",
-								"description": "plz don't edit or remove this header"
-							},
-							{
-								"key": "auth_key",
-								"value": "Lodestone",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "name",
-									"value": "tarun jamili",
-									"type": "text"
-								}
-							],
-							"options": {
-								"urlencoded": {}
-							}
-						},
-						"url": {
-							"raw": "{{training_skillCheck}}/skills?email=tarun.jamili@lodestoneco.com",
-							"host": [
-								"{{training_skillCheck}}"
-							],
-							"path": [
-								"skills"
-							],
-							"query": [
-								{
-									"key": "email",
-									"value": "tarun.jamili@lodestoneco.com"
-								}
-							]
-						},
-						"description": "Hit **Send**, complete each requirement and keep sending until you get a success response!"
-					},
-					"response": []
-				},
-				{
 					"name": "Test collection",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
-								"id": "389283a4-b6b3-49e8-9498-470120a3e123",
+								"id": "660882f8-3e50-4c3c-8791-099575b5bd17",
 								"exec": [
 									"//auth details at collection level",
 									"let authObj = pm.response.json().auth;",
@@ -555,6 +381,8 @@
 									"pm.test('Skills checked', () =>{",
 									"    var vars = pm.response.json().variable.map(value => value.key);",
 									"    pm.expect(vars).to.include('skilled');",
+									"    pm.expect(pm.collectionVariables.get('skilled')).to.be.not.undefined;",
+									"    pm.expect(pm.collectionVariables.get('skilled')).to.eql(true);",
 									"});",
 									"//check pulled response property",
 									"pm.test('Skill check code retrieving set var value from response property', () => {",
@@ -571,7 +399,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://www.getpostman.com/collections/912356e3de195d2cba26",
+							"raw": "https://www.getpostman.com/collections/804d00f8dd23105fa9c7",
 							"protocol": "https",
 							"host": [
 								"www",
@@ -580,10 +408,93 @@
 							],
 							"path": [
 								"collections",
-								"912356e3de195d2cba26"
+								"804d00f8dd23105fa9c7"
 							]
 						},
 						"description": "Paste your collection public link in as the address and send, checking the test results to see if you completed this step."
+					},
+					"response": []
+				},
+				{
+					"name": "Skill check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f639f752-3e74-46b5-95d5-1436d331fdfd",
+								"exec": [
+									"var response=pm.response.json()\r",
+									"var responseData=response.rand\r",
+									"pm.environment.set(\"responseData\", responseData);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "TKR College of engineering and technology",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "auth_key",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "user-id",
+								"value": "{{userId}}",
+								"type": "text",
+								"description": "plz don't edit or remove this header"
+							},
+							{
+								"key": "course",
+								"value": "{{myCourse}}",
+								"type": "text",
+								"description": "plz don't edit or remove this header"
+							},
+							{
+								"key": "response-value",
+								"value": "{{responseData}}",
+								"type": "text",
+								"description": "plz don't edit or remove this header"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Sai Kiran myana\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "postman-skill-checker.glitch.me/skills?email=saiambadasmyana@gmail.com",
+							"host": [
+								"postman-skill-checker",
+								"glitch",
+								"me"
+							],
+							"path": [
+								"skills"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "saiambadasmyana@gmail.com"
+								}
+							]
+						},
+						"description": "Hit **Send**, complete each requirement and keep sending until you get a success response!"
 					},
 					"response": []
 				}
@@ -592,7 +503,7 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "390636c0-bb71-4be2-b81d-d039feb21758",
+						"id": "c6dd428f-52c3-4068-a182-72c1d2118ed7",
 						"type": "text/javascript",
 						"exec": [
 							"var uID = pm.collectionVariables.get(\"userId\");",
@@ -605,7 +516,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "fb369824-278e-480a-bf80-af59df8eadb4",
+						"id": "8e144104-d93e-4569-9dc9-260b5bc686b9",
 						"type": "text/javascript",
 						"exec": [
 							"var template = `",
@@ -669,7 +580,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "ad65fa43-ed2c-413f-84d3-111440015228",
+				"id": "405ec968-32d9-4236-9e51-7920a3368196",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -679,7 +590,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "36ec1c60-9574-4007-bc26-4f52ad0bef1a",
+				"id": "11170e88-ab8e-43d2-bd0c-656e76822a96",
 				"type": "text/javascript",
 				"exec": [
 					"var template = `",
@@ -800,44 +711,34 @@
 	],
 	"variable": [
 		{
-			"id": "015d93cd-9b31-413b-9324-b4d3b44b15fd",
+			"id": "30f1c176-45f8-4d7e-a2f4-62fc510cfc2f",
 			"key": "mock_url",
 			"value": "https://d78ddda7-4a57-40b3-badf-fa500035e260.mock.pstmn.io"
 		},
 		{
-			"id": "78fe7400-ea78-4d89-8060-e5d5578a008a",
+			"id": "c8e6491e-d010-46f1-a51e-40fb9b5fef61",
 			"key": "userId",
 			"value": ""
 		},
 		{
-			"id": "8beff37e-b09e-4d91-975b-501b6af7bdea",
+			"id": "e07d76ad-88b9-40f7-b8a8-9a65f355beed",
 			"key": "training_api",
 			"value": "postman-student-expert.glitch.me"
 		},
 		{
-			"id": "e538dfb2-544d-4f40-bb21-eb4490d00ec5",
-			"key": "training_api",
+			"id": "92e12a65-0ce7-43bf-8b11-be72235e374c",
+			"key": "email_key",
+			"value": "saiambadasmyana@gmail.com"
+		},
+		{
+			"id": "921f2b43-4bc0-43a7-9f1d-37fe2fe89bd8",
+			"key": "myCourse",
 			"value": ""
 		},
 		{
-			"id": "65cd6f58-e415-4edf-a951-ce4dd4da4f80",
-			"key": "training_skillCheck",
-			"value": "postman-skill-checker.glitch.me"
-		},
-		{
-			"id": "fb3a1a66-ae31-4b28-a636-6059d652be33",
-			"key": "training_skillCheck",
-			"value": ""
-		},
-		{
-			"id": "dab88609-b0cb-4d00-aafc-34bd1eceb492",
+			"id": "aba4e91c-55ff-47db-aa95-16a58bc99b58",
 			"key": "skilled",
 			"value": ""
-		},
-		{
-			"id": "d556f066-ff3a-435e-ab00-bb8007d490ac",
-			"key": "email_key",
-			"value": "tarun.jamili@lodestoneco.com"
 		}
 	],
 	"protocolProfileBehavior": {}
