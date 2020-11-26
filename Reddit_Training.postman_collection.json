@@ -1235,6 +1235,61 @@
 			"response": []
 		},
 		{
+			"name": "7. Get the Friends List",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{TokenValue}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://www.oauth.reddit.com/prefs/friends",
+					"protocol": "https",
+					"host": [
+						"www",
+						"oauth",
+						"reddit",
+						"com"
+					],
+					"path": [
+						"prefs",
+						"friends"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8. Get Message from Inbox",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{TokenValue}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://oauth.reddit.com/message/inbox",
+					"protocol": "https",
+					"host": [
+						"oauth",
+						"reddit",
+						"com"
+					],
+					"path": [
+						"message",
+						"inbox"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "2. Passing Incorrect Client Id",
 			"event": [
 				{
@@ -1443,61 +1498,6 @@
 				"description": "Passing Incorrect Client ID in the Access Token API\r\n\r\n* Response code should be 401 Unauthorized"
 			},
 			"response": []
-		},
-		{
-			"name": "7. Get the Friends List",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{TokenValue}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "https://www.oauth.reddit.com/prefs/friends",
-					"protocol": "https",
-					"host": [
-						"www",
-						"oauth",
-						"reddit",
-						"com"
-					],
-					"path": [
-						"prefs",
-						"friends"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "8. Get Message from Inbox",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{TokenValue}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "https://oauth.reddit.com/message/inbox",
-					"protocol": "https",
-					"host": [
-						"oauth",
-						"reddit",
-						"com"
-					],
-					"path": [
-						"message",
-						"inbox"
-					]
-				}
-			},
-			"response": []
 		}
 	],
 	"event": [
@@ -1524,7 +1524,7 @@
 	],
 	"variable": [
 		{
-			"id": "4f09a306-2712-4915-9e67-805df23e730b",
+			"id": "6f504124-e188-4ed5-b181-2ba89a0ed124",
 			"key": "USERNAME",
 			"value": ""
 		}
