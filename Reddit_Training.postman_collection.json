@@ -1307,14 +1307,14 @@
 						"id": "5cec1932-b39a-4c2e-a728-1b7fec8bc2e7",
 						"exec": [
 							"//Veridy the status code is 200\r",
-							"pm.test(\" C356 Verify the Status code is 401\", function () {\r",
+							"pm.test(\"C356 Verify the Status code is 401\", function () {\r",
 							"    pm.response.to.have.status(401);\r",
 							"});\r",
 							"\r",
 							"let response = pm.response.json();\r",
 							"pm.environment.set(\"TokenValue\" , response.access_token);\r",
 							"\r",
-							"pm.test(\"Content-Type is present\", function () {\r",
+							"pm.test(\"C356 Content-Type is present\", function () {\r",
 							"    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=UTF-8\");\r",
 							"});\r",
 							""
@@ -1523,7 +1523,7 @@
 	],
 	"variable": [
 		{
-			"id": "d20340a4-c4f0-4370-bae0-9aee2dfadd73",
+			"id": "72ea8010-50ca-4ab5-950d-6e249a5b063b",
 			"key": "USERNAME",
 			"value": ""
 		}
