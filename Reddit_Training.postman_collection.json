@@ -1246,10 +1246,9 @@
 					}
 				],
 				"url": {
-					"raw": "https://www.oauth.reddit.com/prefs/friends",
+					"raw": "https://oauth.reddit.com/prefs/friends",
 					"protocol": "https",
 					"host": [
-						"www",
 						"oauth",
 						"reddit",
 						"com"
@@ -1524,7 +1523,7 @@
 	],
 	"variable": [
 		{
-			"id": "6f504124-e188-4ed5-b181-2ba89a0ed124",
+			"id": "d20340a4-c4f0-4370-bae0-9aee2dfadd73",
 			"key": "USERNAME",
 			"value": ""
 		}
