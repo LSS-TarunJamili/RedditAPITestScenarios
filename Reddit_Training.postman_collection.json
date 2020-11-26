@@ -24,18 +24,21 @@
 						"id": "83d414a2-f22c-4dfb-a8ca-9505bb6b3c2c",
 						"exec": [
 							"//Veridy the status code is 200\r",
-							"pm.test(\"Verify the Status code is 200\", function () {\r",
+							"pm.test(\"C354 Verify the Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
 							"let response = pm.response.json();\r",
+							"pm.test(\"C354 Verify user token has generated\" , function(){\r",
 							"pm.environment.set(\"TokenValue\" , response.access_token);\r",
+							"})\r",
+							"\r",
 							"\r",
 							"pm.test(\"Content-Type is present\", function () {\r",
 							"    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=UTF-8\");\r",
 							"});\r",
 							"\r",
-							""
+							" "
 						],
 						"type": "text/javascript"
 					}
@@ -112,7 +115,7 @@
 						"id": "3a8dc1d8-84ba-4d5e-9b44-c91f6a88b4aa",
 						"exec": [
 							"//Veridy the status code is 200\r",
-							"pm.test(\"Verify the Status code is 200\", function () {\r",
+							"pm.test(\"C451 Verify the Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
@@ -122,7 +125,7 @@
 							"    pm.globals.set(\"DisplayName\",displayName);\r",
 							"\r",
 							"// Verify the display name\r",
-							"pm.test(\"validating the display name with the username\", function () {\r",
+							"pm.test(\"C451 validating the display name with the username\", function () {\r",
 							"\r",
 							"    pm.expect(displayName).to.eql(\"u_tarunjamili\");\r",
 							"    \r",
@@ -169,7 +172,7 @@
 					"script": {
 						"id": "bed7f109-a1dd-434e-a132-414db475d03b",
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
+							"pm.test(\"C452 Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
@@ -178,13 +181,13 @@
 							"let Quarantine = jsonData.data.subreddit.quarantine;\r",
 							"\r",
 							"// Verify the display name\r",
-							"pm.test(\"validating the display name and Quarantine\", function () {\r",
+							"pm.test(\"C452 validating the display name and Quarantine\", function () {\r",
 							"    pm.expect(displayName).to.eql(\"u_tarunjamili\");\r",
 							"    pm.expect(Quarantine).to.eql(false);\r",
 							"});\r",
 							"\r",
 							"let username = pm.globals.get(\"DisplayName\");\r",
-							"pm.test(\"Verify the Display name is matched in the Get the Own profile and Get Info About User\", function () {\r",
+							"pm.test(\"C452 Verify the Display name is matched in the Get the Own profile and Get Info About User\", function () {\r",
 							"    pm.expect(displayName).to.eql(username);\r",
 							"\r",
 							"});"
@@ -237,7 +240,7 @@
 					"script": {
 						"id": "7e611e68-2764-4820-b651-25f444afa05d",
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
+							"pm.test(\"C453 Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
 							"});",
 							"",
@@ -245,11 +248,11 @@
 							"let Numsites = jsonData.numsites;",
 							"",
 							"// Verify the display name",
-							"pm.test(\"Verify the Numsites\", function () {",
+							"pm.test(\" C453 Verify the Numsites\", function () {",
 							"    pm.expect(Numsites).to.eql(25);",
 							"});",
 							"",
-							"tests[\"Numsites is number\"] = typeof(Numsites) === \"number\"",
+							"tests[\"C453 Numsites is number\"] = typeof(Numsites) === \"number\"",
 							"",
 							"var schema = {",
 							"    ",
@@ -1190,7 +1193,7 @@
 							"var data1 = [true, false];",
 							"var data2 = [true, 123];",
 							"",
-							"pm.test('Schema is valid', function () {",
+							"pm.test(\"C453 Schema is valid\", function () {",
 							"    var result = tv4.validateResult(pm.response.json(), schema)",
 							"    if(!result.valid){",
 							"        console.log(result);",
@@ -1250,7 +1253,7 @@
 						"id": "5cec1932-b39a-4c2e-a728-1b7fec8bc2e7",
 						"exec": [
 							"//Veridy the status code is 200\r",
-							"pm.test(\"Verify the Status code is 401\", function () {\r",
+							"pm.test(\" C356 Verify the Status code is 401\", function () {\r",
 							"    pm.response.to.have.status(401);\r",
 							"});\r",
 							"\r",
@@ -1358,14 +1361,13 @@
 						"id": "37846c96-aedc-41ed-85be-286f98cded15",
 						"exec": [
 							"//Veridy the status code is 200\r",
-							"pm.test(\"Verify the Status code is 200\", function () {\r",
+							"pm.test(\"C370 Verify the Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
 							"let response = pm.response.json();\r",
 							"let validation = response.error;\r",
-							"pm.test(\"validating the error message for incorrect username\", function () {\r",
-							"\r",
+							"pm.test(\"C370 validating the error message for incorrect username\", function () {\r",
 							"    pm.expect(validation).to.eql(\"invalid_grant\");\r",
 							"});\r",
 							"\r",
@@ -1441,6 +1443,61 @@
 				"description": "Passing Incorrect Client ID in the Access Token API\r\n\r\n* Response code should be 401 Unauthorized"
 			},
 			"response": []
+		},
+		{
+			"name": "7. Get the Friends List",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{TokenValue}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://www.oauth.reddit.com/prefs/friends",
+					"protocol": "https",
+					"host": [
+						"www",
+						"oauth",
+						"reddit",
+						"com"
+					],
+					"path": [
+						"prefs",
+						"friends"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8. Get Message from Inbox",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{TokenValue}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://oauth.reddit.com/message/inbox",
+					"protocol": "https",
+					"host": [
+						"oauth",
+						"reddit",
+						"com"
+					],
+					"path": [
+						"message",
+						"inbox"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
@@ -1467,7 +1524,7 @@
 	],
 	"variable": [
 		{
-			"id": "f521fd5b-fae3-44dc-8d8f-96109e0aac8a",
+			"id": "4f09a306-2712-4915-9e67-805df23e730b",
 			"key": "USERNAME",
 			"value": ""
 		}
