@@ -107,6 +107,216 @@
 			"response": []
 		},
 		{
+			"name": "2. Passing Incorrect Client Id",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ed43c284-25e5-4bef-a883-58b864e3325f",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "5cec1932-b39a-4c2e-a728-1b7fec8bc2e7",
+						"exec": [
+							"//Veridy the status code is 200\r",
+							"pm.test(\"C356 Verify the Status code is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});\r",
+							"\r",
+							"let response = pm.response.json();\r",
+							"pm.environment.set(\"TokenValue\" , response.access_token);\r",
+							"\r",
+							"pm.test(\"C356 Content-Type is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=UTF-8\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "dM7DVd_Rh0VWd",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "QJy2hyAVRhBY8gy3RujCAPE89iY82w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Basic dM7DVd_Rh0VWdQ:QJy2hyAVRhBY8gy3RujCAPE89iY82w",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "text"
+						}
+					],
+					"options": {
+						"urlencoded": {}
+					}
+				},
+				"url": {
+					"raw": "{{hosturl}}/api/v1/access_token",
+					"host": [
+						"{{hosturl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"access_token"
+					]
+				},
+				"description": "Passing Incorrect Client ID in the Access Token API\r\n\r\n* Response code should be 401 Unauthorized"
+			},
+			"response": []
+		},
+		{
+			"name": "3. Username Validation Checking",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "bbc50713-bbd4-4202-bedc-90793daa2ec5",
+						"exec": [
+							"function UN(length) {\r",
+							"   var result           = '';\r",
+							"   var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';\r",
+							"   var charactersLength = characters.length;\r",
+							"   for ( var i = 0; i < length; i++ ) {\r",
+							"      result += characters.charAt(Math.floor(Math.random() * charactersLength));\r",
+							"   }\r",
+							"   return result;\r",
+							"}\r",
+							"\r",
+							"pm.collectionVariables.set(\"USERNAME\", UN(\"32\"));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "37846c96-aedc-41ed-85be-286f98cded15",
+						"exec": [
+							"//Veridy the status code is 200\r",
+							"pm.test(\"C370 Verify the Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"let response = pm.response.json();\r",
+							"let validation = response.error;\r",
+							"pm.test(\"C370 validating the error message for incorrect username\", function () {\r",
+							"    pm.expect(validation).to.eql(\"invalid_grant\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=UTF-8\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "QJy2hyAVRhBY8gy3RujCAPE89iY82w",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "dM7DVd_Rh0VWdQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Basic dM7DVd_Rh0VWdQ:QJy2hyAVRhBY8gy3RujCAPE89iY82w",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "{{USERNAME}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "text"
+						}
+					],
+					"options": {
+						"urlencoded": {}
+					}
+				},
+				"url": {
+					"raw": "{{hosturl}}/api/v1/access_token",
+					"host": [
+						"{{hosturl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"access_token"
+					]
+				},
+				"description": "Passing Incorrect Client ID in the Access Token API\r\n\r\n* Response code should be 401 Unauthorized"
+			},
+			"response": []
+		},
+		{
 			"name": "4. Get own profile",
 			"event": [
 				{
@@ -1235,89 +1445,20 @@
 			"response": []
 		},
 		{
-			"name": "7. Get the Friends List",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{TokenValue}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "https://oauth.reddit.com/prefs/friends",
-					"protocol": "https",
-					"host": [
-						"oauth",
-						"reddit",
-						"com"
-					],
-					"path": [
-						"prefs",
-						"friends"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "8. Get Message from Inbox",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{TokenValue}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "https://oauth.reddit.com/message/inbox",
-					"protocol": "https",
-					"host": [
-						"oauth",
-						"reddit",
-						"com"
-					],
-					"path": [
-						"message",
-						"inbox"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "2. Passing Incorrect Client Id",
+			"name": "7. Verify the User response timing in Get collection api",
 			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "ed43c284-25e5-4bef-a883-58b864e3325f",
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				},
 				{
 					"listen": "test",
 					"script": {
-						"id": "5cec1932-b39a-4c2e-a728-1b7fec8bc2e7",
+						"id": "13bf6e88-7667-47eb-8e11-7323afe96003",
 						"exec": [
-							"//Veridy the status code is 200\r",
-							"pm.test(\"C356 Verify the Status code is 401\", function () {\r",
-							"    pm.response.to.have.status(401);\r",
+							"pm.test(\"C492 Verify the user Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
 							"});\r",
-							"\r",
-							"let response = pm.response.json();\r",
-							"pm.environment.set(\"TokenValue\" , response.access_token);\r",
-							"\r",
-							"pm.test(\"C356 Content-Type is present\", function () {\r",
-							"    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=UTF-8\");\r",
-							"});\r",
-							""
+							"pm.test(\"C492 Validating the Response body contains KIND:Lisiting\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.sorted_links.kind).to.eql(\"Listing\");\r",
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -1325,176 +1466,108 @@
 			],
 			"request": {
 				"auth": {
-					"type": "basic",
-					"basic": [
+					"type": "bearer",
+					"bearer": [
 						{
-							"key": "username",
-							"value": "dM7DVd_Rh0VWd",
-							"type": "string"
-						},
-						{
-							"key": "password",
-							"value": "QJy2hyAVRhBY8gy3RujCAPE89iY82w",
+							"key": "token",
+							"value": "{{reddit_token}}",
 							"type": "string"
 						}
 					]
 				},
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"type": "text",
-						"value": "Basic dM7DVd_Rh0VWdQ:QJy2hyAVRhBY8gy3RujCAPE89iY82w",
-						"disabled": true
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "grant_type",
-							"value": "password",
-							"type": "text"
-						},
-						{
-							"key": "username",
-							"value": "{{username}}",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "{{password}}",
-							"type": "text"
-						}
-					],
-					"options": {
-						"urlencoded": {}
-					}
-				},
+				"method": "GET",
+				"header": [],
 				"url": {
-					"raw": "{{hosturl}}/api/v1/access_token",
+					"raw": "https://oauth.reddit.com/api/v1/collections/collection?collection_id=bb5d2575-b323-4085-b232-5e61cd0eb4f4&include_links=true",
+					"protocol": "https",
 					"host": [
-						"{{hosturl}}"
+						"oauth",
+						"reddit",
+						"com"
 					],
 					"path": [
 						"api",
 						"v1",
-						"access_token"
+						"collections",
+						"collection"
+					],
+					"query": [
+						{
+							"key": "collection_id",
+							"value": "bb5d2575-b323-4085-b232-5e61cd0eb4f4"
+						},
+						{
+							"key": "include_links",
+							"value": "true"
+						}
 					]
-				},
-				"description": "Passing Incorrect Client ID in the Access Token API\r\n\r\n* Response code should be 401 Unauthorized"
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "3. Username Validation Checking",
+			"name": "8. Verify the user can Follow or unfollow a collection",
 			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "bbc50713-bbd4-4202-bedc-90793daa2ec5",
-						"exec": [
-							"function UN(length) {\r",
-							"   var result           = '';\r",
-							"   var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';\r",
-							"   var charactersLength = characters.length;\r",
-							"   for ( var i = 0; i < length; i++ ) {\r",
-							"      result += characters.charAt(Math.floor(Math.random() * charactersLength));\r",
-							"   }\r",
-							"   return result;\r",
-							"}\r",
-							"\r",
-							"pm.collectionVariables.set(\"USERNAME\", UN(\"32\"));"
-						],
-						"type": "text/javascript"
-					}
-				},
 				{
 					"listen": "test",
 					"script": {
-						"id": "37846c96-aedc-41ed-85be-286f98cded15",
+						"id": "d610ce5c-37b9-4188-b5c8-80786e6c4c9c",
 						"exec": [
-							"//Veridy the status code is 200\r",
-							"pm.test(\"C370 Verify the Status code is 200\", function () {\r",
+							"pm.test(\"C493 Verify the user Response Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"let response = pm.response.json();\r",
-							"let validation = response.error;\r",
-							"pm.test(\"C370 validating the error message for incorrect username\", function () {\r",
-							"    pm.expect(validation).to.eql(\"invalid_grant\");\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Content-Type is present\", function () {\r",
-							"    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=UTF-8\");\r",
-							"});\r",
-							"\r",
-							""
+							"pm.test(\"C493 Verify the response body\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    errors = jsonData.json.errors[0];\r",
+							"    pm.expect(errors).to.eql();\r",
+							"});"
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
 			"request": {
 				"auth": {
-					"type": "basic",
-					"basic": [
+					"type": "bearer",
+					"bearer": [
 						{
-							"key": "password",
-							"value": "QJy2hyAVRhBY8gy3RujCAPE89iY82w",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "dM7DVd_Rh0VWdQ",
+							"key": "token",
+							"value": "{{reddit_token}}",
 							"type": "string"
 						}
 					]
 				},
 				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"type": "text",
-						"value": "Basic dM7DVd_Rh0VWdQ:QJy2hyAVRhBY8gy3RujCAPE89iY82w",
-						"disabled": true
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "grant_type",
-							"value": "password",
-							"type": "text"
-						},
-						{
-							"key": "username",
-							"value": "{{USERNAME}}",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "{{password}}",
-							"type": "text"
-						}
-					],
-					"options": {
-						"urlencoded": {}
-					}
-				},
+				"header": [],
 				"url": {
-					"raw": "{{hosturl}}/api/v1/access_token",
+					"raw": "https://oauth.reddit.com/api/v1/collections/follow_collection?collection_id=bb5d2575-b323-4085-b232-5e61cd0eb4f4&follow=true",
+					"protocol": "https",
 					"host": [
-						"{{hosturl}}"
+						"oauth",
+						"reddit",
+						"com"
 					],
 					"path": [
 						"api",
 						"v1",
-						"access_token"
+						"collections",
+						"follow_collection"
+					],
+					"query": [
+						{
+							"key": "collection_id",
+							"value": "bb5d2575-b323-4085-b232-5e61cd0eb4f4"
+						},
+						{
+							"key": "follow",
+							"value": "true"
+						}
 					]
-				},
-				"description": "Passing Incorrect Client ID in the Access Token API\r\n\r\n* Response code should be 401 Unauthorized"
+				}
 			},
 			"response": []
 		}
@@ -1523,7 +1596,7 @@
 	],
 	"variable": [
 		{
-			"id": "72ea8010-50ca-4ab5-950d-6e249a5b063b",
+			"id": "81e15e40-b088-47ce-aa9e-e6c6c00145ed",
 			"key": "USERNAME",
 			"value": ""
 		}
